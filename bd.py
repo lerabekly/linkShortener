@@ -47,3 +47,6 @@ def registration(con,cur, login, password):
 def findUser(cur, login):
 	log = cur.execute('''SELECT * FROM "users" WHERE login = ? ''', (login, )).fetchone()
 	return log
+def findAccesses(cur):
+	return cur.execute('''SELECT * FROM "accesses"''').fetchall()
+

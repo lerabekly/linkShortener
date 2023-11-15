@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='templates', static_folder='templates/stat
 bcrypt = Bcrypt(app)
 
 menu = {'name': 'Главная', 'url': '/index'}, {'name': 'Авторизация', 'url': '/auth'}, {'name' : 'Регистрация', 'url' : '/reg'}
-menuAuth = {'name': 'Мои ссылки', 'url':'/links'}, {'name': 'Сократить ссылки', 'url':'/newlinks'}, {'name': 'Выход', 'url':'/logout'}
+menuAuth = {'name': 'Мои ссылки', 'url':'/links'}, {'name': 'Сократить ссылки', 'url':'/newLinks'}, {'name': 'Выход', 'url':'/logout'}
 @app.route("/")
 def index():
     return render_template('index.html', menu=menu)
@@ -25,6 +25,17 @@ def reg():
 def links():
     if 'auth' in session:
         return render_template("links.html", menu=menuAuth)
+    else:
+        return redirect(request.host_url + 'auth')
+
+@app.route("/newLinks")
+def newLinks():
+    if 'auth' in session:
+        con = sqlite3.connect(r"bd.db", check_same_thread=False)
+        cur = con.cursor()
+        accesses= findAccesses(cur)
+        print( accesses)
+        return render_template("newLinks.html", menu=menuAuth, accesses=accesses)
     else:
         return redirect(request.host_url + 'auth')
 
@@ -76,6 +87,11 @@ def authorization():
                 session['id']=user[0]
                 session['name']=user[1]
                 return redirect(request.host_url+'links')
+@app.route('/newLinks',methods =['POST', 'GET'])
+def addLink():
+
+
+
 if __name__ == '__main__':
     app.run()
 
