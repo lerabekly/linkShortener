@@ -1,0 +1,60 @@
+nav{
+    heidht: 300px;
+}
+li{
+    list-style-type: none;
+    font-size: 30px;
+    margin: 20px;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+.glav{
+    text-align:center;
+    font-size: 100px;
+    margin-top: 150px;
+}
+form{
+display:flex;
+flex-direction: column;
+justify-content: center;
+padding: 20px;
+width: 400px;
+margin: auto;
+font-size: 25px;
+text-align: center;
+border: 2px solid black;
+border-radius: 30px;
+}
+h1{
+width: 400px;
+margin: auto;
+text-align: center;
+margin-bottom: 20px;
+}
+form>div{
+margin-top:30px;
+}
+button{
+font-size: 20px;
+padding: 8px;
+border-radius: 15px;
+}
+input{
+font-family:inherit;
+font-size: 20px;
+}
+
