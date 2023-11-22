@@ -28,13 +28,13 @@
               </div>
               <div>
                 <label for="shortLink" >Короткая ссылка:</label><br>
-                <input type="text" id="shortLink" name="shortLink" required>
+                <input type="text" id="shortLink" name="shortLink" >
               </div>
     <div class="radio">
         {% for i in accesses %}
         <div>
-            <input type="radio" id="{{i[0]}}" name="how" value="{{i[0]}}" />
-            <label for="{{i[0]}}">{{i[1]}}</label>
+            <input type="radio" id="type" name="type" value="{{i[0]}}" checked />
+            <label for="type">{{i[1]}}</label>
         </div>
             {% endfor %}
     </div>

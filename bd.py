@@ -32,7 +32,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS "links" (
 	"long"	TEXT NOT NULL,
 	"short"	TEXT NOT NULL,
 	"accesses_id"	INTEGER NOT NULL,
-	"count"	INTEGER NOT NULL,
+	"count",
 	"owner"	INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("accesses_id") REFERENCES "accesses"("id"),
@@ -50,3 +50,9 @@ def findUser(cur, login):
 def findAccesses(cur):
 	return cur.execute('''SELECT * FROM "accesses"''').fetchall()
 
+def findShortLink(cur, shortLink):
+	return cur.execute('''SELECT * FROM "links" WHERE short = ?''', (shortLink, )).fetchone()
+def addNewLink(con, cur, longLink, shortLink, accesses, owner):
+	count= 0
+	cur.execute('''INSERT INTO "links"(long, short, accesses_id, count, owner) VALUES (?, ?, ?, ?,?)''', (longLink, shortLink, accesses,count,owner))
+	con.commit()

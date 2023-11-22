@@ -2,6 +2,7 @@ from bd import *
 from flask import Flask, render_template, request, session, redirect, flash
 from flask_bcrypt import Bcrypt
 import os
+import hashlib, random
 Flask.secret_key = os.urandom(10)
 
 app = Flask(__name__, template_folder='templates', static_folder='templates/static')
@@ -89,6 +90,25 @@ def authorization():
                 return redirect(request.host_url+'links')
 @app.route('/newLinks',methods =['POST', 'GET'])
 def addLink():
+    if request.method == "POST":
+        con = sqlite3.connect(r"bd.db", check_same_thread=False)
+        cur = con.cursor()
+        longLink = request.form['longLink']
+        shortLink = request.form['shortLink']
+        type = request.form['type']
+        if shortLink == '':
+            linkRes = request.host_url + hashlib.md5(longLink.encode()).hexdigest()[:random.randint(8, 12)]
+        else:
+            linkRes = request.host_url + shortLink
+        print(longLink, linkRes, type, session['id'])
+        if findShortLink(cur, linkRes) != None:
+            flash(f'Этот псевдоним уже занят')
+            return redirect(f'/newLinks')
+        else:
+            addNewLink(con, cur, longLink, linkRes, type, session['id'])
+            print(longLink, linkRes, type, session['id'])
+            flash(f'Ссылка добавлена, вы можете ее увидеть в ваших ссылках')
+            return redirect(f'/newLinks')
 
 
 
